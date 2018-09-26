@@ -1,0 +1,1 @@
+{"Apps":[{"ID":"4","MajorReleases":[1.1,1.2]},{"ID":"5","MajorReleases":[1.1,1.2]},{"ID":"6","MajorReleases":[1.1,1.2]}]}
