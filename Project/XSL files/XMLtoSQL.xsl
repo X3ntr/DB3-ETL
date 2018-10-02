@@ -20,14 +20,14 @@
 	CREATE TABLE Cities (
 	ci_name NVARCHAR(255),
 	city_id BINARY(255),
-	city_id_base VARCHAR(255),
+	city_id_base VARCHAR(MAX),
 	post VARCHAR(10),
 	lat VARCHAR,
 	long VARCHAR,
 	country_id INT,
-	PRIMARY KEY(city_id),
 	FOREIGN KEY(country_id) REFERENCES Countries(country_id)
 	);
+	SET ANSI_WARNINGS OFF;
 	&#xa;
 	</xsl:text>
 	
@@ -72,13 +72,12 @@
 	</xsl:for-each>	
 
 	<xsl:text>
+	SET ANSI_WARNINGS ON;
+	&#xa;
 	UPDATE Cities
-	SET city_id = c.city_id
-	FROM (	
-	SELECT city_id_base, CAST(N'' AS XML).value('xs:base64Binary(sql:column("city_id_base"))', 'BINARY(255)')) AS city_id
-	FROM Cities ) c
-	WHERE city_id_base = c.city_id_base;
-	
+	SET city_id = CAST(N'' AS XML).value('xs:base64Binary(sql:column("city_id_base"))', 'BINARY(255)');
+
+	ALTER TABLE Cities ADD PRIMARY KEY (city_id);
 	ALTER TABLE Cities DROP COLUMN city_id_base;
 	</xsl:text>
 		
