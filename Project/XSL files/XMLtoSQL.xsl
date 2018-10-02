@@ -49,9 +49,10 @@
 		
 		<xsl:for-each select="./city">
 			<xsl:text>INSERT INTO Cities(ci_name, city_id_base, post, lat, long, country_id)</xsl:text>
-			<xsl:text>VALUES(CONCAT("</xsl:text>
-			<xsl:value-of select="normalize-space(./@ci_name)"/>
-			<xsl:text>", ''), '</xsl:text>
+			<xsl:text>VALUES('</xsl:text>
+			<xsl:variable name="city_name" select="./@ci_name" />
+			<xsl:value-of select='replace($city_name, "&apos;", "&apos;&apos;")'/>
+			<xsl:text>', '</xsl:text>
 			<xsl:value-of select="normalize-space(./@city_id)"/>
 			<xsl:text>', '</xsl:text>
 			<xsl:value-of select="normalize-space(./@post)"/>
