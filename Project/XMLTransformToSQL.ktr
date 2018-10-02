@@ -435,6 +435,69 @@
   </info>
   <notepads>
   </notepads>
+  <connection>
+    <name>Catchem Database</name>
+    <server>localhost</server>
+    <type>MSSQLNATIVE</type>
+    <access>Native</access>
+    <database>catchem</database>
+    <port>51711</port>
+    <username>DB3</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce10beb68d89</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>EXTRA_OPTION_MSSQLNATIVE.instance</code>
+        <attribute>SQLSERVER2017</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>MSSQLUseIntegratedSecurity</code>
+        <attribute>false</attribute>
+      </attribute>
+      <attribute>
+        <code>MSSQL_DOUBLE_DECIMAL_SEPARATOR</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>51711</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
       <from>Load file content in memory</from>
@@ -443,8 +506,13 @@
     </hop>
     <hop>
       <from>XSL Transformation</from>
-      <to>Text file output</to>
+      <to>Execute SQL script</to>
       <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>XSL Transformation</from>
+      <to>Text file output</to>
+      <enabled>N</enabled>
     </hop>
   </order>
   <step>
@@ -554,7 +622,7 @@
     <fileNameField/>
     <create_parent_folder>N</create_parent_folder>
     <file>
-      <name>\E:\Git Directories\DB3-ETL\Project\Output\script</name>
+      <name>\D:\Git Projects\DB3 ETL\Project\Output\script</name>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
       <extention>sql</extention>
@@ -593,7 +661,7 @@
     </remotesteps>
     <GUI>
       <xloc>912</xloc>
-      <yloc>368</yloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -601,14 +669,14 @@
     <name>XSL Transformation</name>
     <type>XSLT</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <xslfilename>E:\Git Directories\DB3-ETL\Project\XSL files\XMLtoSQL.xsl</xslfilename>
+    <xslfilename>D:\Git Projects\DB3 ETL\Project\XSL files\XMLtoSQL.xsl</xslfilename>
     <fieldname>File content</fieldname>
     <resultfieldname>result</resultfieldname>
     <xslfilefield/>
@@ -628,6 +696,52 @@
     </remotesteps>
     <GUI>
       <xloc>704</xloc>
+      <yloc>368</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Execute SQL script</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Catchem Database</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>Y</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql/>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+      <argument>
+        <name>File content</name>
+      </argument>
+      <argument>
+        <name>File size</name>
+      </argument>
+      <argument>
+        <name>result</name>
+      </argument>
+    </arguments>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>912</xloc>
       <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
