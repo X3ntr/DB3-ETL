@@ -12,8 +12,8 @@
 	city_id BINARY(255),
 	city_id_base VARCHAR(MAX),
 	post VARCHAR(10),
-	lat VARCHAR,
-	long VARCHAR,
+	lat VARCHAR(25),
+	long VARCHAR(25),
 	country_id INT,
 	FOREIGN KEY(country_id) REFERENCES Countries(country_id)
 	);
@@ -2033,6 +2033,7 @@ INSERT INTO Cities(ci_name, city_id_base, post, lat, long, country_id)VALUES('Ba
 	UPDATE Cities
 	SET city_id = CAST(N'' AS XML).value('xs:base64Binary(sql:column("city_id_base"))', 'BINARY(255)');
 
+	ALTER TABLE Cities ALTER COLUMN city_id BINARY(255) NOT NULL;
 	ALTER TABLE Cities ADD PRIMARY KEY (city_id);
 	ALTER TABLE Cities DROP COLUMN city_id_base;
 	
