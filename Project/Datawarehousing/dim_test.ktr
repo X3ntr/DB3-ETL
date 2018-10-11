@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
     <name>dim_test</name>
@@ -6,7 +7,7 @@
     <trans_version/>
     <trans_type>Normal</trans_type>
     <trans_status>0</trans_status>
-    <directory>/Project/Datawarehousing</directory>
+    <directory>/</directory>
     <parameters>
     </parameters>
     <log>
@@ -613,23 +614,18 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Generate Rows</from>
-      <to>Row Normaliser</to>
+      <from>CSV file input 2</from>
+      <to>Stream lookup 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Row Normaliser</from>
+      <from>Stream lookup</from>
       <to>Stream lookup 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Stream lookup 2</from>
       <to>Select values</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Stream lookup</from>
-      <to>Stream lookup 2</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -687,7 +683,7 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>D:\Git Projects\DB3 ETL\Tutorial Datawarehousing\feestdagen.csv</filename>
+    <filename>E:\Git Directories\DB3-ETL\Tutorial Datawarehousing\feestdagen.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -1307,7 +1303,7 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
       <value>
         <name>SEASON</name>
         <rename>SEASON</rename>
-        <update>N</update>
+        <update>Y</update>
       </value>
     </lookup>
     <cluster_schema/>
@@ -1318,7 +1314,7 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1344</xloc>
+      <xloc>1216</xloc>
       <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1956,7 +1952,7 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
       <schema_name/>
     </partitioning>
     <compatible>Y</compatible>
-    <optimizationLevel/>
+    <optimizationLevel>9</optimizationLevel>
     <jsScripts>
       <jsScript>
         <jsScript_type>0</jsScript_type>
@@ -2722,8 +2718,8 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
         <rename/>
       </field>
       <field>
-        <name>Seizoen</name>
-        <rename>SEASON</rename>
+        <name>SEASON</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -2735,7 +2731,7 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1200</xloc>
+      <xloc>1088</xloc>
       <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2873,8 +2869,8 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
     </GUI>
   </step>
   <step>
-    <name>Generate Rows</name>
-    <type>RowGenerator</type>
+    <name>CSV file input 2</name>
+    <type>CsvInput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -2883,61 +2879,54 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
       <method>none</method>
       <schema_name/>
     </partitioning>
+    <filename>E:\Git Directories\DB3-ETL\Project\Datawarehousing\seizoenen.csv</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>,</separator>
+    <enclosure>"</enclosure>
+    <header>Y</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>N</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <encoding/>
     <fields>
       <field>
-        <name>s1</name>
+        <name>Seizoen</name>
         <type>String</type>
         <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>Lente</nullif>
-        <length>-1</length>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>6</length>
         <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <trim_type>none</trim_type>
       </field>
       <field>
-        <name>s2</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>Zomer</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <name>Dag</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
       </field>
       <field>
-        <name>s3</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>Herfst</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>s4</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>Winter</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <name>Maand</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
       </field>
     </fields>
-    <limit>1</limit>
-    <never_ending>N</never_ending>
-    <interval_in_ms>5000</interval_in_ms>
-    <row_time_field>now</row_time_field>
-    <last_time_field>FiveSecondsAgo</last_time_field>
     <cluster_schema/>
     <remotesteps>
       <input>
@@ -2946,55 +2935,8 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>992</xloc>
+      <xloc>960</xloc>
       <yloc>416</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Row Normaliser</name>
-    <type>Normaliser</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <typefield>SeasonNr</typefield>
-    <fields>
-      <field>
-        <name>s1</name>
-        <value>1</value>
-        <norm>Seizoen</norm>
-      </field>
-      <field>
-        <name>s2</name>
-        <value>2</value>
-        <norm>Seizoen</norm>
-      </field>
-      <field>
-        <name>s3</name>
-        <value>3</value>
-        <norm>Seizoen</norm>
-      </field>
-      <field>
-        <name>s4</name>
-        <value>4</value>
-        <norm>Seizoen</norm>
-      </field>
-    </fields>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>992</xloc>
-      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3009,19 +2951,23 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>Row Normaliser</from>
+    <from>CSV file input 2</from>
     <input_sorted>N</input_sorted>
-    <preserve_memory>N</preserve_memory>
+    <preserve_memory>Y</preserve_memory>
     <sorted_list>Y</sorted_list>
     <integer_pair>N</integer_pair>
     <lookup>
       <key>
-        <name>Quarter</name>
-        <field>SeasonNr</field>
+        <name>DayOfMonth</name>
+        <field>Dag</field>
+      </key>
+      <key>
+        <name>Month</name>
+        <field>Maand</field>
       </key>
       <value>
         <name>Seizoen</name>
-        <rename>Seizoen</rename>
+        <rename>SEASON</rename>
         <default/>
         <type>String</type>
       </value>
@@ -3034,7 +2980,7 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>992</xloc>
+      <xloc>960</xloc>
       <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
