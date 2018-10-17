@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
     <name>dim_test</name>
@@ -430,7 +429,7 @@
     <created_user/>
     <created_date>2014/02/26 15:30:16.506</created_date>
     <modified_user/>
-    <modified_date>2018/10/10 12:14:50.895</modified_date>
+    <modified_date>2018/10/17 08:09:30.976</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -489,7 +488,7 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
     <server>localhost</server>
     <type>MSSQLNATIVE</type>
     <access>Native</access>
-    <database>catchem</database>
+    <database>catchem_dwh</database>
     <port>1433</port>
     <username>DB3</username>
     <password>Encrypted 2be98afc86aa7f2e4cb79ce10beb68d89</password>
@@ -683,7 +682,7 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>E:\Git Directories\DB3-ETL\Tutorial Datawarehousing\feestdagen.csv</filename>
+    <filename>D:\Git Projects\DB3 ETL\Tutorial Datawarehousing\feestdagen.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -729,6 +728,78 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
     </remotesteps>
     <GUI>
       <xloc>848</xloc>
+      <yloc>416</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>CSV file input 2</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <filename>D:\Git Projects\DB3 ETL\Project\Datawarehousing\seizoenen.csv</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>,</separator>
+    <enclosure>"</enclosure>
+    <header>Y</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>N</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <encoding/>
+    <fields>
+      <field>
+        <name>Seizoen</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>6</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Dag</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Maand</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>960</xloc>
       <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1163,7 +1234,7 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
     <update_bypassed>N</update_bypassed>
     <lookup>
       <schema/>
-      <table>t_dim_test</table>
+      <table>t_dim_day</table>
       <key>
         <name>DATE_SK</name>
         <field>DATE_SK</field>
@@ -2639,23 +2710,18 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
       </field>
       <field>
         <name>DAYS_IN_MONTH_QTY</name>
-        <rename/>
       </field>
       <field>
         <name>DATE_SK</name>
-        <rename/>
       </field>
       <field>
         <name>DAY_DESC</name>
-        <rename/>
       </field>
       <field>
         <name>WEEK_SK</name>
-        <rename/>
       </field>
       <field>
         <name>DAY_DATE</name>
-        <rename/>
       </field>
       <field>
         <name>week_name</name>
@@ -2671,55 +2737,42 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
       </field>
       <field>
         <name>MONTH_SK</name>
-        <rename/>
       </field>
       <field>
         <name>QUARTER_SK</name>
-        <rename/>
       </field>
       <field>
         <name>YEAR_SK</name>
-        <rename/>
       </field>
       <field>
         <name>YEAR_SORT_NUMBER</name>
-        <rename/>
       </field>
       <field>
         <name>DAY_OF_WEEK_SORT_NAME</name>
-        <rename/>
       </field>
       <field>
         <name>IN_DATE</name>
-        <rename/>
       </field>
       <field>
         <name>START_DAY</name>
-        <rename/>
       </field>
       <field>
         <name>Days_since</name>
-        <rename/>
       </field>
       <field>
         <name>date_tk</name>
-        <rename/>
       </field>
       <field>
         <name>DayOfWeekShortDesc</name>
-        <rename/>
       </field>
       <field>
         <name>MonthShortDesc</name>
-        <rename/>
       </field>
       <field>
         <name>PUBLIC_HOLIDAY</name>
-        <rename/>
       </field>
       <field>
         <name>SEASON</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -2865,78 +2918,6 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
     <GUI>
       <xloc>848</xloc>
       <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>CSV file input 2</name>
-    <type>CsvInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <filename>E:\Git Directories\DB3-ETL\Project\Datawarehousing\seizoenen.csv</filename>
-    <filename_field/>
-    <rownum_field/>
-    <include_filename>N</include_filename>
-    <separator>,</separator>
-    <enclosure>"</enclosure>
-    <header>Y</header>
-    <buffer_size>50000</buffer_size>
-    <lazy_conversion>N</lazy_conversion>
-    <add_filename_result>N</add_filename_result>
-    <parallel>N</parallel>
-    <newline_possible>N</newline_possible>
-    <encoding/>
-    <fields>
-      <field>
-        <name>Seizoen</name>
-        <type>String</type>
-        <format/>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>6</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>Dag</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>Maand</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>960</xloc>
-      <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
