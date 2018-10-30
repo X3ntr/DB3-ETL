@@ -7,42 +7,11 @@
 	<xsl:output method="text"/>
 	
 	<xsl:template match="/">
-	
-<xsl:text>CREATE TABLE Countries (
-country_id INT,
-co_name NVARCHAR(255),
-sc CHAR(2),
-lc CHAR(3),
-PRIMARY KEY(country_id)
-);
-CREATE TABLE Cities (
-ci_name NVARCHAR(255),
-city_id BINARY(255),
-post VARCHAR(10),
-lat VARCHAR(25),
-long VARCHAR(25),
-country_id INT,
-PRIMARY KEY (city_id),
-FOREIGN KEY(country_id) REFERENCES Countries(country_id)
-);
 
-USE catchem;
-GO
-CREATE PROCEDURE Base64Decode
-@city_id_base VARCHAR(MAX),
-@result BINARY(255) OUTPUT
-AS
-SELECT @result = CAST(N'' AS XML).value('xs:base64Binary(sql:variable("@city_id_base"))', 'BINARY(255)')
-GO
-&#xa;</xsl:text>
-
-	<xsl:text>DECLARE @city_id BINARY(255)&#xa;</xsl:text>
+	<xsl:text>DECLARE @city_id BINARY(255);&#xa;</xsl:text>
 	<xsl:for-each select="/CountryList/country">
-	<xsl:text>INSERT INTO Countries(country_id, co_name, sc, lc)</xsl:text>
-	<xsl:text>VALUES(</xsl:text>	
-	<xsl:variable name="counter" select="position()"/>	
-	<xsl:copy-of select="$counter"/>
-	<xsl:text>, '</xsl:text>				
+	<xsl:text>INSERT INTO Countries(co_name, sc, lc)</xsl:text>
+	<xsl:text>VALUES('</xsl:text>				
 	<xsl:value-of select="normalize-space(./@co_name)"/>
 	<xsl:text>', '</xsl:text>
 	<xsl:value-of select="normalize-space(./@sc)"/>
@@ -65,9 +34,9 @@ GO
 		<xsl:value-of select="normalize-space(./geo/lat)"/>
 		<xsl:text>', '</xsl:text>
 		<xsl:value-of select="normalize-space(./geo/long)"/>
-		<xsl:text>', </xsl:text>
-		<xsl:copy-of select="$counter"/>
-		<xsl:text>);</xsl:text>
+		<xsl:text>', '</xsl:text>
+		<xsl:value-of select="./../@lc"/>
+		<xsl:text>');</xsl:text>
 		<xsl:text>&#xa;</xsl:text>
 		<xsl:if test="position()= last()"><xsl:text>&#xa;</xsl:text></xsl:if>
 		</xsl:for-each>	
