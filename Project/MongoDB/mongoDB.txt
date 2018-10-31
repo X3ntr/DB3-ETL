@@ -1,0 +1,71 @@
+//Shards aanmaken (CMD)
+//VERSCHILLENDE REPLICASETS!!!
+
+//shard1
+"C:\Program Files\MongoDB\Server\4.0\bin\mongod" --replSet "catchemshard1" --dbpath "C:\data\catchem\shard1" --port 27020 --shardsvr
+
+//shard2
+"C:\Program Files\MongoDB\Server\4.0\bin\mongod" --replSet "catchemshard2" --dbpath "C:\data\catchem\shard2" --port 27021 --shardsvr
+
+//config
+"C:\Program Files\MongoDB\Server\4.0\bin\mongod" --replSet "catchemconfig" --dbpath "C:\data\catchem\config" --port 27022 --configsvr
+
+//Replicaset initialiseren (Robo)
+//1 MEMBER, ZICHZELF!!!
+
+//shard1
+rs.initiate(
+{
+    _id : "catchemshard1",
+    members: [
+    {_id : 0, host: "localhost:27020"}
+    ]
+}
+)
+
+//shard2
+rs.initiate(
+{
+    _id : "catchemshard2",
+    members: [
+    {_id : 0, host: "localhost:27021"}
+    ]
+}
+)
+
+//config
+rs.initiate(
+{
+    _id : "catchemconfig",
+    configsvr: true,
+    members: [
+    {_id : 0, host: "localhost:27022"}
+    ]
+}
+)
+
+//Router toevoegen (CMD)
+"C:\Program Files\MongoDB\Server\4.0\bin\mongos" --configdb "catchemconfig/localhost:27022" --port 27023
+
+//Shards toevoegen (Robo op router)
+sh.addShard("catchemshard1/localhost:27020")
+sh.addShard("catchemshard2/localhost:27021")
+use config
+db.settings.save( { _id:"chunksize", value: 1 } )
+
+//Database aanmaken
+//rechts klikken op router, "Create Database", "catchem"
+
+//Sharding enablen (Robo op router)
+sh.enableSharding("catchem")
+
+//Index aanmaken (Robo op router)
+use catchem
+db.collection.createIndex( { stageId: 1 } )
+sh.shardCollection("catchem.messages", {"stageId": 1})
+
+//Data importeren (CMD)
+"C:\Program Files\MongoDB\Server\4.0\bin\mongoimport.exe" --db catchem --collection messages --file "C:\Users\Philippe\OneDrive - Karel de Grote Hogeschool\KdG\HogeSchool\3e jaar\Databanken\CatchemGenerator\out\output.json" --port 27023 --type json
+
+//Nakijken (Robo op router)
+db.printShardingStatus(true)

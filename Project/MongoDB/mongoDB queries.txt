@@ -1,0 +1,40 @@
+//1) Geef een overzicht van alle metingen gerangschikt per treasure en 
+//   daarbinnen per quest.
+db.messages.find({}).sort({stageId: 1}).sort({questId: 1})
+
+//2) Geef per quest de gemiddelde hartslag weer.
+db.messages.aggregate([
+{$group: {_id: "$questId",avg: {$avg: "$pulse"}}}])
+
+//3) Geef een overzicht van alle metingen voor quests 
+//   bij een gemiddelde hoogte per quest hoger dan 300 meter uitgevoerd zijn.
+//   (GEEFT NIET ALLE METINGEN TERUG, ENKEL GEM. HOOGTE)
+db.messages.aggregate([
+{$group: {_id: "$questId", avg: {$avg: "$altitude"}}},
+{$match: {avg: {$gt: 300}}},
+{$sort: {_id: 1}}])
+
+//4) Neem één centraal punt en geef dan een overzicht van alle 
+//   GPS-coördinaten die gemeten zijn 
+//   in een straal van 100 km (dit mag met flat of spherical 2D gedaan worden)
+//   (PUNT: 50, 50)
+db.messages.find(
+{latitude: {$gt: 40, $lt: 60},
+longitude: {$gt: 40, $lt: 60}},
+{questId: 1, latitude: 1, longitude: 1, _id: 0})
+
+//5) Voorzie Heat map support: Op het internet willen we rond een 
+//   stage cirkels (10 meter, 20 meter, 30 meter , 40 meter, 50 meter 
+//   rond de cache) kunnen tonen. Een cirkel krijgt een kleur naarmate 
+//   de hoogte van de meting. Maak hiervoor een collectie aan in MongoDB 
+//   waar je per stage en per straal de gemiddelde waarden van de 
+//   Decibelmeter (Db) en Hartslag (bpm) opslaat. De heatmap mag per 
+//   stage afzonderlijk aangemaakt worden.
+//   (BEST I CAN DO)
+db.messages.mapReduce(
+    function() {emit(this.decibel,this.pulse)},
+    function(){},
+    {
+    out: "messages_heatmap"    
+    }
+)
