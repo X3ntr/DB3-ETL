@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
     <name>dim_day</name>
@@ -6,7 +7,7 @@
     <trans_version/>
     <trans_type>Normal</trans_type>
     <trans_status>0</trans_status>
-    <directory>/Project/Datawarehousing</directory>
+    <directory>/</directory>
     <parameters>
     </parameters>
     <log>
@@ -608,12 +609,12 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>CSV file input</from>
+      <from>CSV file feestdagen</from>
       <to>Stream lookup</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>CSV file input 2</from>
+      <from>CSV file seizoenen</from>
       <to>Stream lookup 2</to>
       <enabled>Y</enabled>
     </hop>
@@ -672,7 +673,7 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
     </GUI>
   </step>
   <step>
-    <name>CSV file input</name>
+    <name>CSV file feestdagen</name>
     <type>CsvInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -682,7 +683,7 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>D:\Git Projects\DB3 ETL\Tutorial Datawarehousing\feestdagen.csv</filename>
+    <filename>E:\Git Directories\DB3-ETL\Project\Datawarehousing\feestdagen.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -733,7 +734,7 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
     </GUI>
   </step>
   <step>
-    <name>CSV file input 2</name>
+    <name>CSV file seizoenen</name>
     <type>CsvInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -743,7 +744,7 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>D:\Git Projects\DB3 ETL\Project\Datawarehousing\seizoenen.csv</filename>
+    <filename>E:\Git Directories\DB3-ETL\Project\Datawarehousing\seizoenen.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -1234,7 +1235,7 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
     <update_bypassed>N</update_bypassed>
     <lookup>
       <schema/>
-      <table>t_dim_day</table>
+      <table>dim_day</table>
       <key>
         <name>DATE_SK</name>
         <field>DATE_SK</field>
@@ -2891,7 +2892,7 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>CSV file input</from>
+    <from>CSV file feestdagen</from>
     <input_sorted>N</input_sorted>
     <preserve_memory>Y</preserve_memory>
     <sorted_list>Y</sorted_list>
@@ -2932,7 +2933,7 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>CSV file input 2</from>
+    <from>CSV file seizoenen</from>
     <input_sorted>N</input_sorted>
     <preserve_memory>Y</preserve_memory>
     <sorted_list>Y</sorted_list>
