@@ -1,3 +1,6 @@
+use catchem_dwh
+go
+
 CREATE TABLE dim_day
 (
   DATE_SK INT
@@ -45,14 +48,13 @@ CREATE TABLE dim_treasuretype
 )
 ;
 
-
 CREATE TABLE dim_user
 (
   id BIGINT PRIMARY KEY IDENTITY(0,1)
 , version INT
 , date_from DATETIME
 , date_to DATETIME
-, log_time DATE UNIQUE
+, log_time DATETIME2(7)
 , first_name VARCHAR(255)
 , last_name VARCHAR(255)
 , street VARCHAR(255)
@@ -60,7 +62,7 @@ CREATE TABLE dim_user
 , co_name VARCHAR(255)
 , ExperienceLevel VARCHAR(7)
 , Dedicator VARCHAR(3)
-, user_id VARBINARY(255) UNIQUE
+, user_id VARBINARY(255)
 )
 ;CREATE INDEX idx_dim_user_lookup ON dim_user(log_time)
 ;
@@ -78,10 +80,14 @@ CREATE TABLE dim_rain
 
 CREATE TABLE dbo.dim_weather
 (
-  city VARCHAR(100)
-, weather VARCHAR(100)
+  id BIGINT PRIMARY KEY IDENTITY(0,1)
+, version INT
+, date_from DATETIME
+, date_to DATETIME
+, city VARCHAR(100)
+, weather INT
 , "timestamp" DATETIME
-, city_id VARBINARY(MAX)
+, city_id VARBINARY(255)
 )
 ;
 
@@ -91,17 +97,18 @@ CREATE TABLE fact_treasurefound
 , log_date INT
 , treasure_id VARBINARY(255)
 , hunter_id VARBINARY(255)
-, log_time DATE
 , "standaard meetwaarde" INT
 , duur INT
 , creation_date DATETIME
 , city_id VARBINARY(255)
 , weather INT
-, PRIMARY KEY (log_id)
+, fk_dim_user BIGINT
+, fk_dim_treasuretype BIGINT
 , FOREIGN KEY (log_date) REFERENCES dim_day(date_sk)
-, FOREIGN KEY (hunter_id, log_time) REFERENCES dim_user(user_id, log_time)
-, FOREIGN KEY (treasure_id) REFERENCES dim_treasuretype(treasure_id)
 , FOREIGN KEY (weather) REFERENCES dim_rain(weather_id)
+, FOREIGN KEY (fk_dim_user) REFERENCES dim_user(id)
+, FOREIGN KEY (fk_dim_treasuretype) REFERENCES dim_treasuretype(id)
 )
 ;CREATE INDEX idx_fact_treasurefound_lookup ON fact_treasurefound(log_id)
 ;
+

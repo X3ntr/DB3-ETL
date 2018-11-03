@@ -676,7 +676,7 @@
       <schema_name/>
     </partitioning>
     <connection>DB3</connection>
-    <sql>SELECT TOP 5000 u.id 'user_id', u.first_name, u.last_name, u.street, c.ci_name, co.co_name, log_time, "ExperienceLevel" = CASE 
+    <sql>SELECT TOP 50000 u.id 'user_id', u.first_name, u.last_name, u.street, c.ci_name, co.co_name, log_time, "ExperienceLevel" = CASE 
 																		WHEN (SELECT COUNT(hunter_id)
 																			 FROM treasure_log tl1
 																			 WHERE tl.hunter_id = tl1.hunter_id AND tl1.log_time &lt;= tl.log_time) = NULL THEN 'Newbie'
