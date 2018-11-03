@@ -585,7 +585,7 @@
       <table>dim_rain</table>
       <key>
         <name>weatherId</name>
-        <field>weatherId</field>
+        <field>weather_id</field>
         <condition>=</condition>
         <name2/>
       </key>
@@ -596,7 +596,7 @@
         <name2/>
       </key>
       <value>
-        <name>weatherId</name>
+        <name>weather_id</name>
         <rename>weatherId</rename>
         <update>Y</update>
       </value>

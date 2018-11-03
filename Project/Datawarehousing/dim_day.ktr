@@ -648,13 +648,13 @@ Weeks run from Sunday to Saturday.  If you need something else, you will need to
         <currency/>
         <decimal/>
         <group/>
-        <nullif>20070101</nullif>
+        <nullif>20140101</nullif>
         <length>-1</length>
         <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
       </field>
     </fields>
-    <limit>10000</limit>
+    <limit>20000</limit>
     <never_ending>N</never_ending>
     <interval_in_ms/>
     <row_time_field/>
@@ -2062,7 +2062,7 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
         <name>OUT_DATE</name>
         <rename>DAY_DATE</rename>
         <type>Date</type>
-        <length>-1</length>
+        <length>27</length>
         <precision>-1</precision>
         <replace>N</replace>
       </field>
@@ -2808,63 +2808,83 @@ var DAY_OF_WEEK_SORT_NAME = "Day " + DayOfWeek.getInteger();</jsScript_script>
       </field>
       <field>
         <name>START_DAY</name>
+        <rename/>
       </field>
       <field>
         <name>Days_since</name>
+        <rename/>
       </field>
       <field>
         <name>Year</name>
+        <rename/>
       </field>
       <field>
         <name>Month</name>
+        <rename/>
       </field>
       <field>
         <name>DayOfYear</name>
+        <rename/>
       </field>
       <field>
         <name>DayOfMonth</name>
+        <rename/>
       </field>
       <field>
         <name>DayOfWeek</name>
+        <rename/>
       </field>
       <field>
         <name>WeekOfYear</name>
+        <rename/>
       </field>
       <field>
         <name>Quarter</name>
+        <rename/>
       </field>
       <field>
         <name>date_tk</name>
+        <rename/>
       </field>
       <field>
         <name>QuarterName</name>
+        <rename/>
       </field>
       <field>
         <name>YearQuarterName</name>
+        <rename/>
       </field>
       <field>
         <name>DayOfWeekDesc</name>
+        <rename/>
       </field>
       <field>
         <name>DayOfWeekShortDesc</name>
+        <rename/>
       </field>
       <field>
         <name>DayofWeekendInd</name>
+        <rename/>
       </field>
       <field>
         <name>MonthDesc</name>
+        <rename/>
       </field>
       <field>
         <name>MonthShortDesc</name>
+        <rename/>
       </field>
       <field>
         <name>week_of_month_number</name>
+        <rename/>
       </field>
       <field>
         <name>week_of_month_name</name>
+        <rename/>
       </field>
       <field>
         <name>week_name</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>

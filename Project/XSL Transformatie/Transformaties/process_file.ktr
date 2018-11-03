@@ -632,7 +632,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <xslfilename>D:\Git Directories\DB3-ETL\Project\XSL Transformatie\XSL files\XMLtoSQL.xsl</xslfilename>
+    <xslfilename>E:\Git Directories\DB3-ETL\Project\XSL Transformatie\XSL files\XMLtoSQL.xsl</xslfilename>
     <fieldname>File content</fieldname>
     <resultfieldname>result</resultfieldname>
     <xslfilefield/>

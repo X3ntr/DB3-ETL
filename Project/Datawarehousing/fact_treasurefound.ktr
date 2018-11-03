@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>dim_user</name>
+    <name>fact_treasurefound</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -427,16 +427,16 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2018/10/31 14:17:52.246</created_date>
+    <created_date>2018/11/02 22:04:12.637</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2018/10/31 14:17:52.246</modified_date>
-    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <modified_date>2018/11/02 22:04:12.637</modified_date>
+    <key_for_session_key/>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
   <connection>
-    <name>DB3</name>
+    <name>DB3 catchem</name>
     <server>localhost</server>
     <type>MSSQLNATIVE</type>
     <access>Native</access>
@@ -499,7 +499,7 @@
     </attributes>
   </connection>
   <connection>
-    <name>DB3 dwh</name>
+    <name>DB3 catchem_dwh</name>
     <server>localhost</server>
     <type>MSSQLNATIVE</type>
     <access>Native</access>
@@ -564,106 +564,10 @@
   <order>
     <hop>
       <from>Table input</from>
-      <to>Dimension lookup/update</to>
+      <to>Insert / Update</to>
       <enabled>Y</enabled>
     </hop>
   </order>
-  <step>
-    <name>Dimension lookup/update</name>
-    <type>DimensionLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <schema/>
-    <table>dim_user</table>
-    <connection>DB3 dwh</connection>
-    <commit>100</commit>
-    <update>Y</update>
-    <fields>
-      <key>
-        <name>log_time</name>
-        <lookup>log_time</lookup>
-      </key>
-      <date>
-        <name/>
-        <from>date_from</from>
-        <to>date_to</to>
-      </date>
-      <field>
-        <name>first_name</name>
-        <lookup>first_name</lookup>
-        <update>Punch through</update>
-      </field>
-      <field>
-        <name>last_name</name>
-        <lookup>last_name</lookup>
-        <update>Punch through</update>
-      </field>
-      <field>
-        <name>street</name>
-        <lookup>street</lookup>
-        <update>Insert</update>
-      </field>
-      <field>
-        <name>ci_name</name>
-        <lookup>ci_name</lookup>
-        <update>Insert</update>
-      </field>
-      <field>
-        <name>co_name</name>
-        <lookup>co_name</lookup>
-        <update>Insert</update>
-      </field>
-      <field>
-        <name>ExperienceLevel</name>
-        <lookup>ExperienceLevel</lookup>
-        <update>Insert</update>
-      </field>
-      <field>
-        <name>Dedicator</name>
-        <lookup>Dedicator</lookup>
-        <update>Insert</update>
-      </field>
-      <field>
-        <name>user_id</name>
-        <lookup>user_id</lookup>
-        <update>Punch through</update>
-      </field>
-      <return>
-        <name>id</name>
-        <rename/>
-        <creation_method>autoinc</creation_method>
-        <use_autoinc>Y</use_autoinc>
-        <version>version</version>
-      </return>
-    </fields>
-    <sequence/>
-    <min_year>2007</min_year>
-    <max_year>2018</max_year>
-    <cache_size>5000</cache_size>
-    <preload_cache>N</preload_cache>
-    <use_start_date_alternative>N</use_start_date_alternative>
-    <start_date_alternative>none</start_date_alternative>
-    <start_date_field_name/>
-    <useBatch>N</useBatch>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>576</xloc>
-      <yloc>368</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>Table input</name>
     <type>TableInput</type>
@@ -675,33 +579,13 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>DB3</connection>
-    <sql>SELECT TOP 5000 u.id 'user_id', u.first_name, u.last_name, u.street, c.ci_name, co.co_name, log_time, "ExperienceLevel" = CASE 
-																		WHEN (SELECT COUNT(hunter_id)
-																			 FROM treasure_log tl1
-																			 WHERE tl.hunter_id = tl1.hunter_id AND tl1.log_time &lt;= tl.log_time) = NULL THEN 'Newbie'
-																		WHEN (SELECT COUNT(hunter_id)
-																			 FROM treasure_log tl1
-																			 WHERE tl.hunter_id = tl1.hunter_id AND tl1.log_time &lt;= tl.log_time) > 0 AND (SELECT COUNT(hunter_id)
-																			 FROM treasure_log tl1
-																			 WHERE tl.hunter_id = tl1.hunter_id AND tl1.log_time &lt;= tl.log_time) &lt;= 3 THEN 'Amature'
-																		WHEN (SELECT COUNT(hunter_id)
-																			 FROM treasure_log tl1
-																			 WHERE tl.hunter_id = tl1.hunter_id AND tl1.log_time &lt;= tl.log_time) > 3 AND (SELECT COUNT(hunter_id)
-																			 FROM treasure_log tl1
-																			 WHERE tl.hunter_id = tl1.hunter_id AND tl1.log_time &lt;= tl.log_time) &lt;= 10 THEN 'Regular'
-																		ELSE 'Expert' END
-												, "Dedicator" = CASE
-																	WHEN hunter_id IN (SELECT owner_id
-																					   FROM treasure) THEN 'Yes'
-																	ELSE 'No'
-																END
-												
+    <connection>DB3 catchem</connection>
+    <sql>SELECT id 'log_id', FORMAT(log_time,'yyyyMMdd') AS log_date, treasure_id, hunter_id, log_time, "standaard meetwaarde" = 1, "duur" = ABS(DATEDIFF(minute, log_time, session_start)), "creation_date" = SYSDATETIME(), "city_id" = (SELECT city_city_id
+																																																					   FROM treasure t
+																																																					   JOIN Cities c ON t.city_city_id = c.city_id
+																																																					   WHERE t.id = tl.treasure_id), "weather" = 0
 FROM treasure_log tl
-JOIN user_table u ON u.id = tl.hunter_id
-JOIN Cities c ON c.city_id = u.city_city_id
-JOIN Countries co ON co.lc = c.country_id
-WHERE log_type = 2</sql>
+WHERE log_type = 2;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -715,8 +599,80 @@ WHERE log_type = 2</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>384</xloc>
-      <yloc>368</yloc>
+      <xloc>432</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert / Update</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>DB3 catchem_dwh</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>fact_treasurefound</table>
+      <key>
+        <name>log_id</name>
+        <field>log_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>log_date</name>
+        <rename>log_date</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>treasure_id</name>
+        <rename>treasure_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>hunter_id</name>
+        <rename>hunter_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>standaard meetwaarde</name>
+        <rename>standaard meetwaarde</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>duur</name>
+        <rename>duur</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>creation_date</name>
+        <rename>creation_date</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>city_id</name>
+        <rename>city_id</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1024</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

@@ -481,7 +481,7 @@
       <fields>
         <field>
           <variable_name>dir.path</variable_name>
-          <variable_value>D:\Git Directories\DB3-ETL\Project\XSL Transformatie\Countries</variable_value>
+          <variable_value>E:\Git Directories\DB3-ETL\Project\XSL Transformatie\Countries</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -529,8 +529,8 @@ CREATE TABLE Cities (
 ci_name NVARCHAR(255),
 city_id BINARY(255),
 post VARCHAR(10),
-lat VARCHAR(25),
-long VARCHAR(25),
+lat FLOAT(35),
+long FLOAT(35),
 country_id CHAR(3),
 PRIMARY KEY (city_id),
 FOREIGN KEY(country_id) REFERENCES Countries(lc)
